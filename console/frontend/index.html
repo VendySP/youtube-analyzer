@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Audience Vibe Check</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --positive: #22c55e;
+            --neutral: #94a3b8;
+            --negative: #ef4444;
+            --mixed: #a855f7;
+            --accent-blue: #2563eb;
+            --accent-bg: #eff6ff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            margin-bottom: 24px;
+        }
+
+        input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        button {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover { background: #cc0000; }
+        button:disabled { background: #fda4af; cursor: not-allowed; }
+
+        .loader {
+            display: none;
+            text-align: center;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin: 20px 0;
+        }
+
+        .result-card {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+        }
+
+        .video-title { font-size: 1.3rem; margin: 0 0 4px 0; }
+        .video-creator { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
+
+        .summary-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--positive);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 28px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .ratio-bar-container {
+            margin-bottom: 8px;
+        }
+        .ratio-bar {
+            display: flex;
+            height: 24px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+        .segment {
+            height: 100%;
+            transition: width 0.5s ease-in-out;
+        }
+        .seg-pos { background-color: var(--positive); }
+        .seg-neu { background-color: var(--neutral); }
+        .seg-neg { background-color: var(--negative); }
+        .seg-mix { background-color: var(--mixed); }
+
+        .legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 0 4px;
+            margin-bottom: 32px;
+        }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+        .comments-details {
+            border-top: 1px solid #edf2f7;
+            padding-top: 20px;
+        }
+        details summary {
+            cursor: pointer;
+            color: var(--accent-blue);
+            font-weight: 500;
+            outline: none;
+        }
+        .comment-item {
+            padding: 12px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
+        }
+        .comment-tag {
+            font-size: 0.72rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: white;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+        /* Optimized Clean Text-Only Language Badge */
+        .lang-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--accent-blue);
+            background-color: var(--accent-bg);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin-top: 2px;
+            min-width: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>YouTube Video Analyzer</h1>
+    <p class="subtitle">Analyze Video Using Comment Segments Instantly Using AWS AI Pipeline</p>
+
+    <div class="search-box">
+        <input type="text" id="videoInput" placeholder="Paste YouTube Video URL or ID here...">
+        <button id="analyzeBtn" onclick="runAnalysis()">Analyze</button>
+    </div>
+
+    <div id="loader" class="loader">🧠 Analyzing comments, running translations, and summarizing vibes...</div>
+
+    <div id="resultCard" class="result-card">
+        <h2 id="resTitle" class="video-title">Video Title</h2>
+        <div id="resCreator" class="video-creator">by Creator Name</div>
+
+        <div id="resSummary" class="summary-box"></div>
+
+        <div class="ratio-bar-container">
+            <div class="ratio-bar">
+                <div id="barPos" class="segment seg-pos" style="width: 0%"></div>
+                <div id="barNeu" class="segment seg-neu" style="width: 0%"></div>
+                <div id="barNeg" class="segment seg-neg" style="width: 0%"></div>
+                <div id="barMix" class="segment seg-mix" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><span class="dot" style="background: var(--positive)"></span>Positive: <span id="lblPos">0</span>%</div>
+            <div class="legend-item"><span class="dot" style="background: var(--neutral)"></span>Neutral: <span id="lblNeu">0</span>%</div>
+            <div class="legend-item"><span class="dot" style="background: var(--negative)"></span>Negative: <span id="lblNeg">0</span>%</div>
+            <div class="legend-item"><span class="dot" style="background: var(--mixed)"></span>Mixed: <span id="lblMix">0</span>%</div>
+        </div>
+
+        <div class="comments-details">
+            <details>
+                <summary id="accordionHeader">View Analyzed Comments</summary>
+                <div id="commentsList" style="margin-top: 12px;"></div>
+            </details>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function runAnalysis() {
+        const inputVal = document.getElementById('videoInput').value.trim();
+        if (!inputVal) return alert('Please enter a YouTube link or ID!');
+
+        const btn = document.getElementById('analyzeBtn');
+        const loader = document.getElementById('loader');
+        const resultCard = document.getElementById('resultCard');
+
+        btn.disabled = true;
+        loader.style.display = 'block';
+        resultCard.style.display = 'none';
+
+        const API_ENDPOINT = 'https://96pzyjmsm7.execute-api.ap-southeast-3.amazonaws.com/analyze';
+
+        try {
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ video_input: inputVal })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'An unknown backend error occurred.');
+            }
+            
+            const data = await response.json();
+
+            document.getElementById('resTitle').innerText = data.video_title;
+            document.getElementById('resCreator').innerText = `Uploaded by ${data.creator_name}`;
+            document.getElementById('resSummary').innerText = `“${data.ai_summary}”`;
+
+            const ratios = data.sentiment_ratios;
+            document.getElementById('barPos').style.width = `${ratios.POSITIVE}%`;
+            document.getElementById('barNeu').style.width = `${ratios.NEUTRAL}%`;
+            document.getElementById('barNeg').style.width = `${ratios.NEGATIVE}%`;
+            document.getElementById('barMix').style.width = `${ratios.MIXED}%`;
+
+            document.getElementById('lblPos').innerText = ratios.POSITIVE;
+            document.getElementById('lblNeu').innerText = ratios.NEUTRAL;
+            document.getElementById('lblNeg').innerText = ratios.NEGATIVE;
+            document.getElementById('lblMix').innerText = ratios.MIXED;
+
+            const hasTranslations = data.comments.some(c => c.original_language && c.original_language.split('-')[0] !== 'en');
+            const headerElement = document.getElementById('accordionHeader');
+            if (hasTranslations) {
+                headerElement.innerText = "View Translated Analyzed Comments";
+            } else {
+                headerElement.innerText = "View Analyzed Comments";
+            }
+
+            const listDiv = document.getElementById('commentsList');
+            listDiv.innerHTML = '';
+            
+            data.comments.forEach(c => {
+                let color = 'var(--neutral)';
+                if(c.sentiment === 'POSITIVE') color = 'var(--positive)';
+                if(c.sentiment === 'NEGATIVE') color = 'var(--negative)';
+                if(c.sentiment === 'MIXED') color = 'var(--mixed)';
+
+                // Extract only the primary language subtag (e.g. "ja" from "ja-JP")
+                const shortLang = (c.original_language || '??').split('-')[0];
+
+                listDiv.innerHTML += `
+                    <div class="comment-item">
+                        <div class="lang-badge" title="Original: ${c.original_language || 'Unknown'}">
+                            <span>${shortLang}</span>
+                        </div>
+                        <span class="comment-tag" style="background:${color}">${c.sentiment}</span>
+                        <div>
+                            ${c.text} 
+                            <span style="color:var(--text-muted); font-size:0.8rem; margin-left: 4px;">(👍 ${c.likes})</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultCard.style.display = 'block';
+
+        } catch (error) {
+            alert(`⚠️ Backend Error: ${error.message}`);
+        } finally {
+            btn.disabled = false;
+            loader.style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>

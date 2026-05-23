@@ -1,0 +1,57 @@
+# ====================================================================
+# 1. LOCAL TERRAFORM RUNTIME DIRECTORIES
+# ====================================================================
+# Excludes bulky local provider plugins and compiled binary modules
+terraform_code/application/.terraform/
+terraform_code/backend_bootstrap/.terraform/
+
+# Excludes temporary local execution plans generated via 'terraform plan -out'
+*.tfplan
+*.tfplan*
+
+# ====================================================================
+# 2. STATE TRACKING
+# ====================================================================
+# Obsolete local states (Your true state now safely tracks via S3 backend)
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# ====================================================================
+# 3. SECRETS & REPO METADATA (CRITICAL GUARDRAIL)
+# ====================================================================
+# Prevents your live cloud production access keys from leaking to public repos
+*.tfvars
+*.tfvars.json
+
+# Allow tracked example configuration templates to guide your teammates
+!*.example.tfvars
+
+# ====================================================================
+# 4. CUSTOM PROJECT DEFINITIONS
+# ====================================================================
+# Excludes your personal workspace scratchpads and Python logic files
+notes.txt
+config.py
+
+# ====================================================================
+# 5. DIAGNOSTICS & SYSTEM LOGS
+# ====================================================================
+# Suppresses crash diagnostics or runtime terminal traces
+*.hlsl
+*.log
+crash.log
+crash.*.log
+
+# Excludes generic system interface metadata
+.DS_Store
+.idea/
+.vscode/
+
+# Ignore Python bytecode caching folders
+__pycache__/
+*.pyc
+
+
+
+
