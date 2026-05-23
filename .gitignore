@@ -25,7 +25,8 @@ terraform_code/backend_bootstrap/.terraform/
 *.tfvars.json
 
 # Allow tracked example configuration templates to guide your teammates
-!terraform_code/application/.example.tfvars
+!**/*.example.tfvars
+!**/example.tfvars
 
 # ====================================================================
 # 4. CUSTOM PROJECT DEFINITIONS
