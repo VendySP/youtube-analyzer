@@ -65,8 +65,9 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 
 
 ### Preview:
-<p align="center">
-  <img src="markdown-assets/preview (1).gif" alt="Preview" />
-</p>
+![alt text](markdown-assets/preview.gif)
+
+---
+<video controls src="markdown-assets/preview.mp4" title="Title"></video>
 
 
