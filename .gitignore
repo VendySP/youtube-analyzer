@@ -53,8 +53,6 @@ crash.*.log
 __pycache__/
 *.pyc
 
-# Ignore Markdown assets folders
-markdown-assets/
 
 
 
