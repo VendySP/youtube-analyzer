@@ -24,7 +24,7 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 
 ## Architecture Diagram
 <p align="center">
-  <img src="markdown-assets/architecture_diagram.png" alt="Architecture Diagram" />
+  <img src="https://github.com/VendySP/all_markdown_assets/blob/main/youtube-analyzer_assets/architecture_diagram.png" alt="Architecture Diagram" />
 </p>
 
 
