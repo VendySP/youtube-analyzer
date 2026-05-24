@@ -16,7 +16,7 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 - **Adjustable Analysis Depth**: Easily change the number of comments to analyze just by tweaking an environment variable in the Lambda function.
 - **Smart Translation**: Automatically detects non-English comments and translates them using Amazon Translate.
 - **Sentiment Analysis**: Categorize granular comment sentiment (Positive, Negative, Neutral) using Amazon Comprehend.
-- **AI Conclusion**: Generate a summary based of the top comments using Amazon Bedrock
+- **AI Conclusion**: Generate a summary based of the top comments using Amazon Bedrock.
 
 
 ## Architecture Diagram
