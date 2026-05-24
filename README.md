@@ -68,8 +68,5 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 ![preview](https://github.com/VendySP/youtube-analyzer/blob/main/markdown-assets/preview.gif)
 
 
-## V
-![preview](https://github.com/VendySP/youtube-analyzer/blob/main/markdown-assets/preview.mp4)
-
 
 
