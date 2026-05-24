@@ -1,12 +1,11 @@
-<p align="center">
-  <img src="https://github.com/VendySP/all_markdown_assets/blob/main/youtube-analyzer_assets/logo.png" alt="Logo" />
-</p>
-
 <p align="right">
   <img src="https://img.shields.io/github/commit-activity/t/VendySP/youtube-analyzer" alt="GitHub commit activity">
   <img src="https://img.shields.io/github/last-commit/VendySP/youtube-analyzer" alt="GitHub last commit">
 </p>
 
+<p align="center">
+  <img src="https://github.com/VendySP/all_markdown_assets/blob/main/youtube-analyzer_assets/logo.png" alt="Logo" />
+</p>
 
 An automated, serverless AWS cloud pipeline that allows users to instantly analyze and summarize YouTube video sentiment based on top comments, build entirely using Terraform. This project was built for educational purposes and was tested manually in the AWS Console before being implemented in Terraform.
 
