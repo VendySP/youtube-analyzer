@@ -1,10 +1,8 @@
 # Youtube Analyzer
----
 An automated, serverless AWS cloud pipeline that allows users to instantly analyze and summarize YouTube video sentiment based on top comments, build entirely using Terraform. This project was built for educational purposes and was tested manually in the AWS Console before being implemented in Terraform."
 
 
 ## Technologies
----
 - AWS
 - Terraform
 - Python
@@ -12,7 +10,6 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 
 
 ## Key Features
----
 - **State Locking**: Uses native S3 state locking to prevent multiple peoples from modifying the infrastructure at the same time.
 - **Fully Serverless**: Leverages fully serverless AWS services, ensuring high scalability with near-zero idle operating costs.
 - **Link Validation**: Automatically detects if a pasted YouTube link is valid before processing.
@@ -23,12 +20,11 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 
 
 ## Architecture Diagram
----
 ![Architecture Diagram](markdown-assets/architecture_diagram.png)
 
 
 ## Running the Project
----
+
 ### Prerequisites
 - Install and configure **AWS CLI** (Administrator permissions recommended).
 - Install **Terraform**.
@@ -55,7 +51,9 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 6. Once the application deployment completes, both the API Gateway and S3 Website URL will be printed out as outputs in your terminal.
 7. Open `src/index.html` and replace the value of the **API_ENDPOINT** variable with your newly created API Gateway URL.
 8. Re-apply the application infrastructure to push your updated HTML file to the static website.
-    ```terraform apply --auto-approve```
+    ```
+    terraform apply --auto-approve
+    ```
 
 9. Open the provided S3 Website URL in the browser. The application is now ready.
 
