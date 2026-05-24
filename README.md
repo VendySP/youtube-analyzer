@@ -20,7 +20,9 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 
 
 ## Architecture Diagram
-![Architecture Diagram](markdown-assets/architecture_diagram.png)
+<p align="center">
+  <img src="markdown-assets/architecture_diagram.png" alt="Architecture Diagram" />
+</p>
 
 
 ## Running the Project
@@ -63,6 +65,8 @@ An automated, serverless AWS cloud pipeline that allows users to instantly analy
 
 
 ### Preview:
-
+<p align="center">
+  <img src="markdown-assets/preview (1).gif" alt="Preview" />
+</p>
 
 
